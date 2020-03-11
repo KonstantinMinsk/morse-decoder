@@ -39,6 +39,21 @@ const MORSE_TABLE = {
 
 function decode(expr) {
     // write your solution here
+    let result = [];
+    for (let i = 0 ; i < expr.length; i +=10) {
+        let letter = expr.slice(i, i+10);  // Получаем БУКВУ - slice (0, 10) извлекает часть строки и возвращает извлеченную часть в новой строке.
+        let letterRep = letter.replace(/^0*/,''); // Получаем массив без НУЛЕЙ (0) Метод Replace () заменяет указанное значение другим значением в строке и возвращает новый массив
+        if (letterRep == '**********') result.push (' '); //проверяем, если вместо БУКВЫ - ПРОБЕЛ? если да, то добавляем в новый массив
+        else {
+            letterRep = letterRep.replace(/10/g,'.'); //- в массиве без нолей заменяем 10 на . 
+            letterRep = letterRep.replace(/11/g,'-'); //- в массиве без нолей заменяем 11 на - 
+            // можно записать короче letterRep = letterRep.replace(/10/g,'.').replace(/11/g,'-'); - сначала 10 меняем , потом 11 
+            result.push(MORSE_TABLE[letterRep]); //добавляем в новый массив букву или соответсвующую цифру 
+        }       
+        // т.е. MORSE_TABLE[letterRep] = obj[key] т.е. получаем значение ключа 
+    }
+    return result.join(''); // возвращаем вместо нового массива строку
+
 }
 
 module.exports = {
